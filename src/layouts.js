@@ -6,6 +6,7 @@ import SignUp from './views/signup';
 import NotFound from './views/notfound';
 import Navbar from './components/navbar';
 import Footer from './components/footer';
+import injectContext from './store/appContext';
 
 const Layouts = props => {
     return (
@@ -29,4 +30,4 @@ const Layouts = props => {
     )
 }
 
-export default Layouts;
+export default injectContext(Layouts);
