@@ -17,7 +17,8 @@ const injectContext = PassedComponent => {
         }));
 
         useEffect(() => {
-            state.actions.saludo();
+            state.actions.getServices();
+            state.actions.getEvents();
         }, []);
 
         return (

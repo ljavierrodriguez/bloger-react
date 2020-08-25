@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { Context } from './../store/appContext';
 
 const Index = props => {
+    const { store } = useContext(Context);
+
     return (
         <>
 
@@ -19,39 +22,34 @@ const Index = props => {
             <div className="after-banner">
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-4 col-sm-4">
-                            {/* <!-- after banner item --> */}
-                            <div className="ab-item">
-                                {/* <!-- heading --> */}
-                                <h3>Focus on Systems</h3>
-                                {/* <!-- paragraph --> */}
-                                <p>While our prices are competitive, it's the value that's unmatched.</p>
-                                <br />
-                                <a href="#">Read More</a>
-                            </div>
-                        </div>
-                        <div className="col-md-4 col-sm-4">
-                            {/* <!-- after banner item --> */}
-                            <div className="ab-item">
-                                {/* <!-- heading --> */}
-                                <h3>Plan of Action</h3>
-                                {/* <!-- paragraph --> */}
-                                <p>While our prices are competitive, it's the value that's unmatched.</p>
-                                <br />
-                                <a href="#">Read More</a>
-                            </div>
-                        </div>
-                        <div className="col-md-4 col-sm-4">
-                            {/* <!-- after banner item --> */}
-                            <div className="ab-item">
-                                {/* <!-- heading --> */}
-                                <h3>Quality Compliance</h3>
-                                {/* <!-- paragraph --> */}
-                                <p>While our prices are competitive, it's the value that's unmatched.</p>
-                                <br />
-                                <a href="#">Read More</a>
-                            </div>
-                        </div>
+                        <Context.Consumer>
+                            {
+                                ({ store }) => {
+                                    return (
+                                        <>
+                                            {
+                                                !!store.services &&
+                                                store.services.map((service, index) => {
+                                                    return (
+                                                        <div className="col-md-4 col-sm-4" key={index}>
+                                                            {/* <!-- after banner item --> */}
+                                                            <div className="ab-item">
+                                                                {/* <!-- heading --> */}
+                                                                <h3>{service.title}</h3>
+                                                                {/* <!-- paragraph --> */}
+                                                                <p>{service.description}</p>
+                                                                <br />
+                                                                <a href={service.link.url}>{service.link.label}</a>
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                })
+                                            }
+                                        </>
+                                    )
+                                }
+                            }
+                        </Context.Consumer>
                     </div>
                 </div>
             </div>
@@ -65,45 +63,26 @@ const Index = props => {
                         <h2>Upcoming events</h2>
                     </div>
                     <div className="row">
-                        <div className="col-md-4 col-sm-4">
-                            {/* <!-- event item --> */}
-                            <div className="event-item">
-                                {/* <!-- image --> */}
-                                <img className="img-responsive" src="img/event/1.jpg" alt="Events" />
-                                {/* <!-- heading --> */}
-                                <h4><a href="#">Rihanna, Eminem on stage</a></h4>
-                                {/* <!-- sub text --> */}
-                                <span className="sub-text">Integrating technology and software solutions.</span>
-                                {/* <!-- paragraph --> */}
-                                <p>It is our belief that in order to be most efficient it requires adaptive technology and software solutions.</p>
-                            </div>
-                        </div>
-                        <div className="col-md-4 col-sm-4">
-                            {/* <!-- event item --> */}
-                            <div className="event-item">
-                                {/* <!-- image --> */}
-                                <img className="img-responsive" src="img/event/2.jpg" alt="Events" />
-                                {/* <!-- heading --> */}
-                                <h4><a href="#">Dr. Dre on stage live</a></h4>
-                                {/* <!-- sub text --> */}
-                                <span className="sub-text">Integrating technology and software solutions.</span>
-                                {/* <!-- paragraph --> */}
-                                <p>It is our belief that in order to be most efficient it requires adaptive technology and software solutions.</p>
-                            </div>
-                        </div>
-                        <div className="col-md-4 col-sm-4">
-                            {/* <!-- event item --> */}
-                            <div className="event-item">
-                                {/* <!-- image --> */}
-                                <img className="img-responsive" src="img/event/3.jpg" alt="Events" />
-                                {/* <!-- heading --> */}
-                                <h4><a href="#">Macaroons live Party</a></h4>
-                                {/* <!-- sub text --> */}
-                                <span className="sub-text">Integrating technology and software solutions.</span>
-                                {/* <!-- paragraph --> */}
-                                <p>It is our belief that in order to be most efficient it requires adaptive technology and software solutions.</p>
-                            </div>
-                        </div>
+                        {
+                            !!store.events &&
+                            store.events.map((event, index) => {
+                                return (
+                                    <div className="col-md-4 col-sm-4" key={index}>
+                                        {/* <!-- event item --> */}
+                                        <div className="event-item">
+                                            {/* <!-- image --> */}
+                                            <img className="img-responsive" src={event.image} alt="Events" />
+                                            {/* <!-- heading --> */}
+                                            <h4><a href="#">{event.title}</a></h4>
+                                            {/* <!-- sub text --> */}
+                                            <span className="sub-text">{event.resume}</span>
+                                            {/* <!-- paragraph --> */}
+                                            <p>{event.description}</p>
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        }
                     </div>
                 </div>
             </div>
