@@ -1,9 +1,19 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Context } from './../store/appContext';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const Index = props => {
-    const { store } = useContext(Context);
+const EventDetail = ({ history, match: { params: { id, category } } }, ...props) => {
+    const { store: { events } } = useContext(Context);
+
+    const [event, setEvent] = useState(null);
+
+    useEffect(() => {
+        const eventData = !!events ? events.filter((evento) => evento.id == id) : null;
+        if (eventData !== null) {
+            setEvent(...eventData);
+        }
+    });
 
     return (
         <>
@@ -12,86 +22,39 @@ const Index = props => {
             <div className="banner">
                 <div className="container">
                     {/* <!-- heading --> */}
-                    <h2>I'm Banner Heading for This Page</h2>
+                    <h2>{!!event && event.title}</h2>
+                    <h5>{category}</h5>
                     {/* <!-- paragraph --> */}
-                    <p>It is our belief that in order to be most efficient it requires adaptive technology and software our customers can focus on their core business.</p>
+                    <p>{!!event && event.resume}</p>
                 </div>
             </div>
             {/* <!-- banner end --> */}
 
-            {/* <!-- after banner --> */}
-            <div className="after-banner">
-                <div className="container">
-                    <div className="row">
-                        <Context.Consumer>
-                            {
-                                ({ store }) => {
-                                    return (
-                                        <>
-                                            {
-                                                !!store.services &&
-                                                store.services.map((service, index) => {
-                                                    return (
-                                                        <div className="col-md-4 col-sm-4" key={index}>
-                                                            {/* <!-- after banner item --> */}
-                                                            <div className="ab-item">
-                                                                {/* <!-- heading --> */}
-                                                                <h3>{service.title}</h3>
-                                                                {/* <!-- paragraph --> */}
-                                                                <p>{service.description}</p>
-                                                                <br />
-                                                                <a href={service.link.url}>{service.link.label}</a>
-                                                            </div>
-                                                        </div>
-                                                    )
-                                                })
-                                            }
-                                        </>
-                                    )
-                                }
-                            }
-                        </Context.Consumer>
-                    </div>
-                </div>
-            </div>
-            {/* <!-- after banner end--> */}
+
 
             {/* <!-- events --> */}
             <div className="event" id="event">
-                <div className="container">
+                <div className="container-fluid">
                     <div className="default-heading">
                         {/* <!-- heading --> */}
-                        <h2>Upcoming events</h2>
+                        <h2>{/* Upcoming events */}</h2>
+                    </div>
+                    <div className="row" >
+                        <div className="col-md-10 col-md-offset-1" style={{ backgroundColor: 'red' }}>
+                            <img src={!!event && event.image} alt="" />
+                        </div>
                     </div>
                     <div className="row">
-                        {
-                            !!store.events &&
-                            store.events.map((event, index) => {
-                                return (
-                                    <div className="col-md-4 col-sm-4" key={index}>
-                                        {/* <!-- event item --> */}
-                                        <div className="event-item">
-                                            {/* <!-- image --> */}
-                                            <img className="img-responsive" src={event.image} alt="Events" />
-                                            {/* <!-- heading --> */}
-                                            <h4>
-                                                <Link to={`/events/${event.category.toLowerCase()}/${event.id}`}>
-                                                    {event.title}({event.category})
-                                                </Link>
-                                            </h4>
-                                            {/* <!-- sub text --> */}
-                                            <span className="sub-text">{event.resume}</span>
-                                            {/* <!-- paragraph --> */}
-                                            <p>{event.description}</p>
-                                        </div>
-                                    </div>
-                                )
-                            })
-                        }
+                        <div className="col-md-10 col-md-offset-1">
+                            <br />
+                            <p>{!!event && event.description}</p>
+                        </div>
                     </div>
                 </div>
             </div>
             {/* <!-- events end --> */}
+
+            <button className="btn btn-info" onClick={() => history.push("/")}>Regresar</button>
 
             {/* <!-- blog --> */}
             <div className="blog" id="blog">
@@ -226,4 +189,4 @@ const Index = props => {
     )
 }
 
-export default Index;
+export default EventDetail;

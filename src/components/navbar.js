@@ -17,7 +17,7 @@ const Navbar = props => {
                                 <span className="icon-bar"></span>
                                 <span className="icon-bar"></span>
                             </button>
-                            <Link className="navbar-brand" to="/"><img className="img-responsive" src="img/logo.png" alt="Logo" /></Link>
+                            <Link className="navbar-brand" to="/"><img className="img-responsive" src="http://localhost:3000/img/logo.png" alt="Logo" /></Link>
                         </div>
 
                         {/* <!-- Collect the nav links, forms, and other content for toggling --> */}

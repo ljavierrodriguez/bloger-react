@@ -11,7 +11,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 console.log("Hola Mundo");
             },
             getServices: async () => {
-                const resp = await fetch("/data/services.json");
+                const resp = await fetch("http://localhost:3000/data/services.json");
                 //console.log(resp);
                 const data = await resp.json();
                 //console.log(data);
@@ -19,14 +19,19 @@ const getState = ({ getStore, getActions, setStore }) => {
                     services: data.services
                 })
             },
-            getEvents: async () => {
-                const resp = await fetch("/data/events.json");
-                //console.log(resp);
-                const data = await resp.json();
-                //console.log(data);
-                setStore({
-                    events: data.events
+            getEvents: () => {
+                fetch("http://localhost:3000/data/events.json", {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
                 })
+                    .then(resp => resp.json())
+                    .then(data => {
+                        setStore({
+                            events: data.events
+                        })
+                    });
             }
         }
     }

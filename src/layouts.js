@@ -6,6 +6,7 @@ import SignUp from './views/signup';
 import NotFound from './views/notfound';
 import Navbar from './components/navbar';
 import Footer from './components/footer';
+import EventDetail from './views/eventDetail';
 import injectContext from './store/appContext';
 
 const Layouts = props => {
@@ -20,6 +21,7 @@ const Layouts = props => {
                         <Route exact path="/login">
                             <Login />
                         </Route>
+                        <Route exact path="/events/:category/:id" component={EventDetail} />
                         <Route exact path="/" component={Index} />
                         <Route component={NotFound} />
                     </Switch>
