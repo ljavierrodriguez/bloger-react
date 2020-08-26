@@ -9,6 +9,7 @@ const EventDetail = ({ history, match: { params: { id, category } } }, ...props)
     const [event, setEvent] = useState(null);
 
     useEffect(() => {
+        window.scrollTo(0, 0); // iniciar la pagina desde arriba
         const eventData = !!events ? events.filter((evento) => evento.id == id) : null;
         if (eventData !== null) {
             setEvent(...eventData);
